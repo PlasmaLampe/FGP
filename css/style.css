@@ -1,0 +1,21 @@
+.clearfix::before,
+.clearfix::after {
+  content: " ";
+  display: table;
+} 
+
+.clearfix::after {
+  clear: both;
+}
+
+.block {
+    padding: 15px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}

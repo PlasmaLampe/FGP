@@ -1,5 +1,4 @@
 <html>
-
   <head>
     <title>FGP - mgm</title>
 
@@ -13,6 +12,20 @@
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
 
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+    
     <!-- 2. Configure SystemJS -->
     <script>
       System.config({
@@ -20,20 +33,30 @@
           app: {
             format: 'register',
             defaultExtension: 'js'
-          }
+          },"node_modules/ng2-bootstrap": {
+          defaultExtension: "js"
+          },
+        },
+        paths: {
+            "ng2-bootstrap/ng2-bootstrap":   "node_modules/ng2-bootstrap/ng2-bootstrap.js"
         }
       });
       System.import('app/boot')
             .then(null, console.error.bind(console));
     </script>
-
   </head>
 
-  <!-- 3. Display the application -->
   <body>
-    <user-add>Loading...</user-add>
-    <restaurant-add>Loading...</restaurant-add>
-    <rating>Loading...</rating>
+    <div>
+        <rating class="block left">Loading...</rating>
+    </div>
+    
+    <div class="clearfix"></div>
+    
+    <div>
+        <user-add class="block left">Loading...</user-add>
+        <restaurant-add class="block left">Loading...</restaurant-add>
+    </div>
   </body>
 
 </html>

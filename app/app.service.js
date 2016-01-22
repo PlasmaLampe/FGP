@@ -58,4 +58,3 @@ System.register(['angular2/core'], function(exports_1) {
         }
     }
 });
-//# sourceMappingURL=app.service.js.map

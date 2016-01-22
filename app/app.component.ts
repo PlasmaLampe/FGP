@@ -95,7 +95,7 @@ export class RestaurantAddCtrl {
         </ul>
         </div>
       
-      <button (click)="addRestaurant()">Punkte setzen</button>
+      <button (click)="submit()">Punkte setzen</button>
     </div>
     `,
     providers: [FGPService]
@@ -103,6 +103,8 @@ export class RestaurantAddCtrl {
 export class RatingCtrl {
     public selectedUser : string = 'Konrad Zuse ... achnee ...';
     public users : string[] = [];
+    
+    public usePoints:number;
     
     public selectedRestaurant : string = 'Die Batcave...';
     public restaurants : string[] = [];
@@ -119,5 +121,50 @@ export class RatingCtrl {
     public selectRestaurant(rest:string) : void{
         this.selectedRestaurant = rest;        
     }
+    
+    public submit(){
+        this._fgpService.makeAChoice(this.selectedUser, this.selectedRestaurant, this.usePoints);
+    }
+}
+
+@Component({
+  selector: 'today-results',
+  directives: [
+  ],
+  template:`
+    <h2>Heutige Wahlen</h2>
+    <div>
+        <table class="table-hover">
+            <tr>
+                <th class="big-left">Name</th>
+                <th class="big-left">Wahl</th> 
+                <th class="big-left">Punkte</th>
+            </tr>
+            <template ngFor #choice [ngForOf]="getChoices()" #i="index">
+                <tr>
+                    <td class="big-left">{{choice.name}}</td>
+                    <td class="big-left">{{choice.choice}}</td> 
+                    <td class="big-left">{{choice.points}}</td>
+                </tr>
+            </template>
+        </table>
+    </div>
+    `,
+    providers: [FGPService]
+})
+export class TodayResultCtrl {
+    choices : IChoice[] = [];
+    
+  constructor(private _fgpService : FGPService){
+      this.choices = _fgpService.choices;
+      
+      this._fgpService.getChoiceEmitter().subscribe(() => {
+         alert('choice');
+         this.choices = _fgpService.choices; 
+      });
+  }
   
+  public getChoices() : IChoice[] {
+      return this.choices;
+  }
 }

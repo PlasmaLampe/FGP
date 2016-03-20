@@ -1,4 +1,4 @@
-System.register(['angular2/core', './app.service'], function(exports_1) {
+System.register(['angular2/core', './app.service', 'angular2/common', 'ng2-bootstrap/ng2-bootstrap'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,8 +8,8 @@ System.register(['angular2/core', './app.service'], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, app_service_1;
-    var UserAddCtrl, RestaurantAddCtrl, RatingCtrl;
+    var core_1, app_service_1, common_1, ng2_bootstrap_1;
+    var UserAddCtrl, RestaurantAddCtrl, RatingCtrl, TodayResultCtrl;
     return {
         setters:[
             function (core_1_1) {
@@ -17,6 +17,12 @@ System.register(['angular2/core', './app.service'], function(exports_1) {
             },
             function (app_service_1_1) {
                 app_service_1 = app_service_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
+            },
+            function (ng2_bootstrap_1_1) {
+                ng2_bootstrap_1 = ng2_bootstrap_1_1;
             }],
         execute: function() {
             UserAddCtrl = (function () {
@@ -33,7 +39,7 @@ System.register(['angular2/core', './app.service'], function(exports_1) {
                 UserAddCtrl = __decorate([
                     core_1.Component({
                         selector: 'user-add',
-                        template: "\n    <h2>Einen Benutzer hinzuf\u00FCgen</h2>\n    <div>\n      <label>Dein Name: </label>\n      <div><input [(ngModel)]=\"newUserName\" placeholder=\"name\"></div>\n      <button (click)=\"addUser()\">Ich will auch essen!</button>\n    </div>\n    <h2>Bekannte Nutzer</h2>\n    <ul>\n    <li *ngFor='#user of users'> {{user}} </li>\n    </ul>\n    ",
+                        template: "\n    <h2>Einen Benutzer hinzuf\u00FCgen</h2>\n    <div>\n      <label>Dein Name: </label>\n      <div><input [(ngModel)]=\"newUserName\"></div>\n      <button (click)=\"addUser()\">Ich will auch essen!</button>\n    </div>\n    <h3>Bekannte Nutzer</h3>\n    <ul>\n    <li *ngFor='#user of users'> {{user}} </li>\n    </ul>\n    ",
                         providers: [app_service_1.FGPService]
                     }), 
                     __metadata('design:paramtypes', [app_service_1.FGPService])
@@ -55,7 +61,7 @@ System.register(['angular2/core', './app.service'], function(exports_1) {
                 RestaurantAddCtrl = __decorate([
                     core_1.Component({
                         selector: 'restaurant-add',
-                        template: "\n    <h2>Ein Restaurant hinzuf\u00FCgen</h2>\n    <div>\n      <label>Wo willst du sonst noch essen? </label>\n      <div><input [(ngModel)]=\"newRestaurantName\" placeholder=\"name\"></div>\n      <button (click)=\"addRestaurant()\">Da will ich essen!</button>\n    </div>\n    <h2>Bekannte Restaurants</h2>\n    <ul>\n    <li *ngFor='#restaurant of restaurants'> {{restaurant}} </li>\n    </ul>\n    ",
+                        template: "\n    <h2>Ein Restaurant hinzuf\u00FCgen</h2>\n    <div>\n      <label>Wo willst du sonst noch essen? </label>\n      <div><input [(ngModel)]=\"newRestaurantName\"></div>\n      <button (click)=\"addRestaurant()\">Da will ich essen!</button>\n    </div>\n    <h3>Bekannte Restaurants</h3>\n    <ul>\n    <li *ngFor='#restaurant of restaurants'> {{restaurant}} </li>\n    </ul>\n    ",
                         providers: [app_service_1.FGPService]
                     }), 
                     __metadata('design:paramtypes', [app_service_1.FGPService])
@@ -66,13 +72,29 @@ System.register(['angular2/core', './app.service'], function(exports_1) {
             RatingCtrl = (function () {
                 function RatingCtrl(_fgpService) {
                     this._fgpService = _fgpService;
+                    this.selectedUser = 'Konrad Zuse ... achnee ...';
                     this.users = [];
+                    this.selectedRestaurant = 'Die Batcave...';
+                    this.restaurants = [];
                     this.users = _fgpService.userList;
+                    this.restaurants = _fgpService.restaurantList;
                 }
+                RatingCtrl.prototype.selectUser = function (user) {
+                    this.selectedUser = user;
+                };
+                RatingCtrl.prototype.selectRestaurant = function (rest) {
+                    this.selectedRestaurant = rest;
+                };
+                RatingCtrl.prototype.submit = function () {
+                    this._fgpService.makeAChoice(this.selectedUser, this.selectedRestaurant, this.usePoints);
+                };
                 RatingCtrl = __decorate([
                     core_1.Component({
                         selector: 'rating',
-                        template: "\n    <h2>Heutige Wertung abgeben</h2>\n    <div>\n      <label>Wer bist du?</label>\n      <dropdown dropdown-height=\"200px\" dropdown-width=\"200px\"\n         [options]=\"users\"\n         (selection)=\"onSelection($event)\">\n        </dropdown>\n      <div><input [(ngModel)]=\"usePoints\" placeholder=\"points\"></div>\n      \n      <label>Wie viele Punkte m\u00F6chtest du setzen?</label>\n      <div><input [(ngModel)]=\"usePoints\" placeholder=\"points\"></div>\n      \n      <label>Wo m\u00F6chtest du hingehen?</label>\n      <div><input [(ngModel)]=\"usePoints\" placeholder=\"points\"></div>\n      \n      <button (click)=\"addRestaurant()\">Punkte setzen</button>\n    </div>\n    ",
+                        directives: [
+                            ng2_bootstrap_1.DROPDOWN_DIRECTIVES, common_1.CORE_DIRECTIVES
+                        ],
+                        template: "\n    <h2>Heutige Wertung abgeben</h2>\n    <div>\n      <label>Wer bist du?</label>\n        <div class=\"dropdown\">\n        <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n            {{selectedUser}}\n            <span class=\"caret\"></span>\n        </button>\n        <ul class=\"dropdown-menu\" aria-labelledby=\"Userlist\">\n            <li *ngFor='#user of users'><a href=\"#\" (click)='selectUser(user)'>{{user}}</a></li>\n        </ul>\n        </div>\n      \n      <label>Wie viele Punkte m\u00F6chtest du setzen?</label>\n      <div><input [(ngModel)]=\"usePoints\"></div>\n      \n      <label>Wo m\u00F6chtest du hingehen?</label>\n        <div class=\"dropdown\">\n        <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n            {{selectedRestaurant}}\n            <span class=\"caret\"></span>\n        </button>\n        <ul class=\"dropdown-menu\" aria-labelledby=\"Restaurantlist\">\n            <li *ngFor='#restaurant of restaurants'><a href=\"#\" (click)='selectRestaurant(restaurant)'>{{restaurant}}</a></li>\n        </ul>\n        </div>\n      \n      <button (click)=\"submit()\">Punkte setzen</button>\n    </div>\n    ",
                         providers: [app_service_1.FGPService]
                     }), 
                     __metadata('design:paramtypes', [app_service_1.FGPService])
@@ -80,7 +102,32 @@ System.register(['angular2/core', './app.service'], function(exports_1) {
                 return RatingCtrl;
             })();
             exports_1("RatingCtrl", RatingCtrl);
+            TodayResultCtrl = (function () {
+                function TodayResultCtrl(_fgpService) {
+                    var _this = this;
+                    this._fgpService = _fgpService;
+                    this.choices = [];
+                    this.choices = _fgpService.choices;
+                    this._fgpService.getChoiceEmitter().subscribe(function () {
+                        alert('choice');
+                        _this.choices = _fgpService.choices;
+                    });
+                }
+                TodayResultCtrl.prototype.getChoices = function () {
+                    return this.choices;
+                };
+                TodayResultCtrl = __decorate([
+                    core_1.Component({
+                        selector: 'today-results',
+                        directives: [],
+                        template: "\n    <h2>Heutige Wahlen</h2>\n    <div>\n        <table class=\"table-hover\">\n            <tr>\n                <th class=\"big-left\">Name</th>\n                <th class=\"big-left\">Wahl</th> \n                <th class=\"big-left\">Punkte</th>\n            </tr>\n            <template ngFor #choice [ngForOf]=\"getChoices()\" #i=\"index\">\n                <tr>\n                    <td class=\"big-left\">{{choice.name}}</td>\n                    <td class=\"big-left\">{{choice.choice}}</td> \n                    <td class=\"big-left\">{{choice.points}}</td>\n                </tr>\n            </template>\n        </table>\n    </div>\n    ",
+                        providers: [app_service_1.FGPService]
+                    }), 
+                    __metadata('design:paramtypes', [app_service_1.FGPService])
+                ], TodayResultCtrl);
+                return TodayResultCtrl;
+            })();
+            exports_1("TodayResultCtrl", TodayResultCtrl);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map

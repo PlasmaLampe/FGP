@@ -123,7 +123,7 @@ System.register(['angular2/core'], function(exports_1) {
                 };
                 FGPService.prototype.pushChoice = function (user, choice, points) {
                     this.choices.push({
-                        name: name,
+                        name: user,
                         choice: choice,
                         points: points
                     });

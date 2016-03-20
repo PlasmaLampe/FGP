@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {FGPService} from './app.service';
+import {FGPService,IChoice} from './app.service';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import {Alert} from 'ng2-bootstrap/ng2-bootstrap';
 import { DROPDOWN_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';

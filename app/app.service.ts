@@ -113,7 +113,7 @@ export class FGPService {
     
     pushChoice(user : string, choice:string, points : number) : void{
         this.choices.push({
-            name: name,
+            name: user,
             choice : choice,
             points : points
         });
